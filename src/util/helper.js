@@ -7,17 +7,35 @@
 	
 // 	Call all these functions in route.js inside the test-me route handler
 
-const today =new Date()
-let printDate = function(){
-    return today.currentdate()
-}
-let printMonth = function(){
-    return today.currentmonth()
-}
-let getBatchInfo = function(){
-    return "Californium, W3D4,the topic for today is Node js module system"
-}
+// const today =new Date()
+// let printDate = function(){
+//     return today.currentdate()
+// }
+// let printMonth = function(){
+//     return today.currentmonth()
+// }
+// let getBatchInfo = function(){
+//     return "Californium, W3D4,the topic for today is Node js module system"
+// }
 
-module.exports.myDate = printDate;
-module.exports.myMonth = printMonth;
-module.exports.myBatchInfo = getBatchInfo;
+// module.exports.myDate = printDate;
+// module.exports.myMonth = printMonth;
+// module.exports.myBatchInfo = getBatchInfo;
+
+function mygrv(){
+    const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+ 
+    const div = new Date();
+    let name =month[div.getMonth()]
+    let monthname = div.getMonth()+1
+    const mydata= "Californium, W3D4,the topic for today is Node js module system"
+    console.log(div)
+    console.log(name)
+    console.log(monthname)
+    console.log(name,"is the",monthname,"month of the year")
+    console.log(mydata)
+    
+    return "done"
+ }
+ 
+ module.exports.mydiv= mygrv;

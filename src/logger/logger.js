@@ -4,5 +4,6 @@
 
 let welcome = function(){
     console.log ("I am divyamala tiwari and a part of FunctionUp Californium cohort.")
+    return "completed"
 }
 module.exports.myFunction= welcome
