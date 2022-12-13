@@ -34,6 +34,7 @@ app.get('/missingNumber',(req, res) => {
 });
   module.exports = app;
 
+  
 // Q2.
 // -write an api which gives the missing number in an array of integers starting from anywhere….e.g [33,
 //34, 35, 37, 38]: 36 is missing
