@@ -25,13 +25,13 @@ const getParticularBooks=async function(req,res){
 }
 
 const getXINRBooks=async function(req,res){
-    let allBooks= await BookModel.find( { $or:[ prices={indianPrice:"100INR",indianPrice:"200INR", indianPrice:"500INR"}] } )
+    let allBooks= await BookModel.find({ "prices.indianPrice" : { $in: ["100INR", "200INR", "500INR"] }     })
     res.send({msg: allBooks})
 }
 
 const getRandomBooks=async function(req,res){
     let allBooks= await BookModel.find( { 
-          $or: [ {  totalPages: { $gt:  500}  }]
+          $or: [  { stockAvailable: true } , {  totalPages: { $gt:  500}  }]
          } )
     res.send({msg: allBooks})
 }
