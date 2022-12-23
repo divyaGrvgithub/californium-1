@@ -31,17 +31,13 @@ const bookAuthor= async function (req, res) {
 }
 //------------------------4===================
 const attribute= async function(req, res){
-    let a=await publisherModel.find({publishername:["Penguin","HarperCollins"]}).select({_id:1});
-    console.log(a[0]._id)
-    let b=await bookModel.find({publishername:a[0]._id}).select({_id:1});
-    for (let index = 0; index < b.length; index++) {
-        const element = attribute[index];
-        let newentry=await bookModel.findByIdAndUpdate(element,{$set:{isHardCover:true}})
-
-        console.log(newentry)
+    let a=await publisherModel.find({publishername:["Penguin","HarperCollins"]})
+    let b=a.map(c=>c._id)
+    let d=await bookModel.updateMany({a:{$in:b}},{$set:{isHardCover:true}})
+    let e= await bookModel.updateMany({rating:{$gt:3.5}},{$inc:{price:10}})
+    res.send({d,e})
     }
-    res.send("Check the console")
-}
+
 ///-----------------------------------last-------------------------
 const update=async function(req, res){
 
