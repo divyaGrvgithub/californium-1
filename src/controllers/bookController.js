@@ -30,16 +30,16 @@ const bookAuthor= async function (req, res) {
 
 }
 //------------------------4===================
-const attribute= async function(req, res){
-    let a=await publisherModel.find({publishername:["Penguin","HarperCollins"]})
-    let b=a.map(c=>c._id)
-    let d=await bookModel.updateMany({a:{$in:b}},{$set:{isHardCover:true}})
-    let e= await bookModel.updateMany({rating:{$gt:3.5}},{$inc:{price:10}})
-    res.send({d,e})
-    }
+const bookUpdate = async function (req, res) {
+    const publisher = await publisherModel.find({name:{$in:[ 'Penguin', 'HarperCollins']}})
+    const publisherIds = publisher.map(x=>x._id)
+    const updatedData = await bookModel.updateMany({publisher:{$in: publisherIds}}, {$set:{isHardCover:true}})
+    const updatedBookPrice = await bookModel.updateMany({ rating: { $gt: 3.5 } }, { $inc: { price: 10 } });
+    res.send({update:updatedData,updatedPrice:updatedBookPrice})
+}
 
 
 module.exports.createBook = createBook
 module.exports.getBooksData = getBooksData
 module.exports.bookAuthor = bookAuthor
-module.exports.attribute = attribute
+module.exports.bookUpdate = bookUpdate
