@@ -5,7 +5,6 @@ const UserController= require("../controllers/userController")
 const BookController= require("../controllers/bookController")
 const commonMW1 = require ("../middlewares/commonMiddlewares")
 const commonMW2 = require ("../middlewares/myMiddlewares")
-//--------------my asignment--
 const productController= require("../controllers/productController")
 const orderController= require("../controllers/orderController")
 const useerController= require("../controllers/useerController")
