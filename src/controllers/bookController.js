@@ -38,22 +38,8 @@ const attribute= async function(req, res){
     res.send({d,e})
     }
 
-///-----------------------------------last-------------------------
-const update=async function(req, res){
-
-    let key = await authorModel.find({ rating:{$gt:3.5}}).select({_id:1});
-    let books=await bookModel.find({author:key}).select({_id:1})
-    for (let index = 0; index < books.length; index++) {
-        const element = books[index];
-        let update= await bookModel.findByIdAndUpdate(element,{$inc:{price:10}}, {new:true})
-        console.log(update)
-        
-    }
-    res.send("Check the console")
-}
 
 module.exports.createBook = createBook
 module.exports.getBooksData = getBooksData
 module.exports.bookAuthor = bookAuthor
 module.exports.attribute = attribute
-module.exports.update = update
