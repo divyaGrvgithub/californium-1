@@ -32,7 +32,8 @@ const bookAuthor= async function (req, res) {
 //------------------------4===================
 const attribute= async function(req, res){
     let a=await publisherModel.find({publishername:["Penguin","HarperCollins"]}).select({_id:1});
-    let b=await bookModel.find({publishername:b}).select({_id:1});
+    console.log(a[0]._id)
+    let b=await bookModel.find({publishername:a[0]._id}).select({_id:1});
     for (let index = 0; index < b.length; index++) {
         const element = attribute[index];
         let newentry=await bookModel.findByIdAndUpdate(element,{$set:{isHardCover:true}})
