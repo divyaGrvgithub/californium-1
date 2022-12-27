@@ -4,14 +4,14 @@ const userModel = require("../models/userModel");
 /*
   Read all the comments multiple times to understand why we are doing what we are doing in login api and getUserData api
 */
-const createUser = async function (abcd, xyz) {
+const createUser = async function (req, res) {
   //You can name the req, res objects anything.
   //but the first parameter is always the request 
   //the second parameter is always the response
-  let data = abcd.body;
+  let data = req.body;
   let savedData = await userModel.create(data);
-  console.log(abcd.newAtribute);
-  xyz.send({ msg: savedData });
+  console.log(req.newAtribute);
+  res.send({ msg: savedData });
 };
 
 const loginUser = async function (req, res) {
@@ -22,7 +22,7 @@ const loginUser = async function (req, res) {
   if (!user)
     return res.send({
       status: false,
-      msg: "username or the password is not corerct",
+      msg: "username or the password is not correct",
     });
 
   // Once the login is successful, create the jwt token with sign function
@@ -36,7 +36,7 @@ const loginUser = async function (req, res) {
     {
       userId: user._id.toString(),
       batch: "californium",
-      organisation: "FunctionUp",
+      organization: "FunctionUp",
     },
     "functionup-californium-very-very-secret-key"
   );
