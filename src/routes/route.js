@@ -1,28 +1,17 @@
 const express = require('express');
 const router = express.Router();
-// const UserModel= require("../models/userModel.js")
-const UserController= require("../controllers/userController")
-const BookController= require("../controllers/bookController")
-const commonMW = require ("../middlewares/commonMiddlewares")
+const UserController= require("../controllers/userController");
+const MiddleWare = require("../middlewares/commonMiddlewares");
 
-router.get("/test-me", function (req, res) {
-    res.send("My first ever api!")
-})
-
-// router.post("/createBook", BookController.createBook)
-// // router.get("/users/:userId",commonMW.authenticate,BookController.getBooksData)
-// router.put("/users/:userId",commonMW.authenticate,commonMW.authorise,BookController.updateBooks)
-// router.delete('/users/:userId',commonMW.authorise,commonMW.authenticate,BookController.deleteBooks)
-// router.get('/users/:userId',commonMW.authorise,commonMW.authenticate,BookController.totalSalesPerAuthor)
-
-router.post("/users",UserController.createUser)
-router.post("/login",UserController.loginUser)
-router.get("/users/:userId",commonMW.authenticate,commonMW.authorise,UserController.getUserData)
-router.put("/users/:userId",commonMW.authenticate,commonMW.authorise,UserController.updateUser)
-router.delete('/users/:userId',commonMW.authorise,commonMW.authenticate,UserController.deleteUser)
-// router.get("/basicRoute", commonMW.mid1, commonMW.mid2, commonMW.mid3, commonMW.mid4, UserController.basicCode)
+router.post("/users" , UserController.createUser);
+router.post("/login" , UserController.loginUser);
+router.get("/users/:userId" , MiddleWare.userValidation , MiddleWare.tokenAuthentication , MiddleWare.tokenAuthorization, UserController.getUser);
+router.put("/users/:userId" , MiddleWare.userValidation , MiddleWare.tokenAuthentication , MiddleWare.tokenAuthorization, UserController.updateUser);
+router.delete("/users/:userId" , MiddleWare.userValidation , MiddleWare.tokenAuthentication , MiddleWare.tokenAuthorization, UserController.deleteUser);
+router.post("/users/:userId/posts" , MiddleWare.userValidation , MiddleWare.tokenAuthentication , MiddleWare.tokenAuthorization, UserController.postMessage);
 
 
+module.exports = router;
 // const mid1= function ( req, res, next) {
 //     console.log("Hi I am a middleware named Mid1")
 //     // logic
@@ -50,4 +39,3 @@ router.delete('/users/:userId',commonMW.authorise,commonMW.authenticate,UserCont
 // router.get("/basicRoute3", commonMW.mid2, UserController.basicCode3)
 // router.get("/basicRoute4", commonMW.mid1, commonMW.mid4, UserController.basicCode4)
 
-module.exports = router;

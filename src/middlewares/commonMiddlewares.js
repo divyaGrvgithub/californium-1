@@ -1,26 +1,58 @@
 const jwt = require("jsonwebtoken");
-const authenticate = function(req, res, next) {
-    let token=req.headers["x-auth-token"];
-    
-    if(!token){
-       res.send({msg: "header missing"})}
-    let decodedToken = jwt.verify(token,"functionup-californium-very-very-secret-key")
-    if (!decodedToken)  return res.send({ status: false, msg: "token is invalid" })
-    req.decodedToken = decodedToken
-     next()
-}
-const authorise = function(req,res,next){
-  let token =req.headers["x-auth-token"];
-  let decodedToken = jwt.verify(token,"functionup-californium-very-very-secret-key")
-  let checkUserId = req.params.userId;
- 
-  if (!checkUserId)
-     return res.send("msg : userid doesn't exist")
-     let userLoggedIn =decodedToken.userId
-     if(userLoggedIn!=checkUserId) return res.send({ msg: "UserId Is Missing"})
-     
-next()
+const UserModel = require("../models/userModel");
+
+const userValidation = async function (req, res, next) {
+  try {
+    let userId = req.params.userId;
+    let userDetails = await UserModel.findById(userId);
+
+    if (userDetails) {
+      next();
+    } else {
+      return res.status(404).send({ msg: "Error", Error: "No such user exists with this ID." });
+    }
+  } catch (err) {
+    res.status(500).send({ msg: "Error", Error: err.message });
+  }
 }
 
-module.exports.authenticate=authenticate
-module.exports.authorise=authorise
+const tokenAuthentication = function (req, res, next) {
+  try {
+    let token = req.headers["x-auth-token"];
+    if (!token) {
+      return res.status(400).send({ status: false, msg: "the header token is required." });
+    }
+
+    let decoded = jwt.verify(token, "functionup-californium-very-very-secret-key");
+    if (!decoded) {
+      return res.status(401).send({ status: false, msg: "Invalid token id." });
+    }
+    next();
+  } catch (err) {
+    res.status(500).send({ msg: "Error", Error: err.message });
+  }
+}
+
+const tokenAuthorization = function (req, res, next) {
+  try{
+  let token = req.headers["x-auth-token"];
+    if (!token) {
+      return res.status(400).send({ status: false, msg: "the header token is required." });
+    }
+
+    let decoded = jwt.verify(token, "functionup-californium-very-very-secret-key");
+    if (!decoded) {
+      return res.status(401).send({ status: false, msg: "Invalid token id." });
+    }
+    if (decoded.userId != req.params.userId) {
+      return res.status(403).send({ status: false, msg: "The loggdin user is not authorized." });
+    }
+    next();
+  }catch(err){
+    res.status(500).send({ msg: "Error", Error: err.message });
+  }
+}
+
+module.exports.userValidation = userValidation;
+module.exports.tokenAuthentication = tokenAuthentication;
+module.exports.tokenAuthorization = tokenAuthorization;
