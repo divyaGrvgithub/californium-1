@@ -95,18 +95,14 @@ const updateUser = async function (req, res) {
   res.send({ status: updatedUser, data: updatedUser });
 };
 
-const deleteUser = async function(req, res){
+const deleteUser = async function (req, res) {
   let userId = req.params.userId;
-  let user = await userModel.findById(userId);
-  //Return an error if no user with the given id exists in the db
-  if (!user) {
-    return res.send("No such user exists");
-  }
-
   let userData = req.body;
-  let updatedUser = await userModel.findOneAndDelete({ _id: userId }, userData);
-  res.send({ status: updatedUser, data: updatedUser });
-};
+  let deletedUser = await userModel.updateMany({ _id: userId },{$unset:userData},{new:true});
+  let updatedUser = await userModel.find({ _id: userId} );
+
+  res.send({ status: deletedUser , data:updatedUser});
+  };
 
 
 module.exports.createUser = createUser;

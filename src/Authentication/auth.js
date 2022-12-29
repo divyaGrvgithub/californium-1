@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const express = require('express');
 const router = express.Router();
 
-const auth =async function (req,res,next){
+const authenticate =async function (req,res,next){
     let x=req.headers['x-auth-token']
   // console.log(x)
   if(!x){
@@ -13,4 +13,4 @@ const auth =async function (req,res,next){
     return res.send({ status: false, msg: "token is invalid" })
   next()
 }
-module.exports=router;
+module.exports.authenticate=authenticate;
