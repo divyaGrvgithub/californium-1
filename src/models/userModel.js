@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema( {
         required: true
     },
     emailId: String,
+    password: String,
     gender: {
         type: String,
         enum: ["male", "female", "LGBTQ"] //"falana" will give an error

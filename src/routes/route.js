@@ -9,15 +9,18 @@ router.get("/test-me", function (req, res) {
     res.send("My first ever api!")
 })
 
-router.post("/createBook", BookController.createBook)
-router.get("/getBooksData",BookController.getBooksData)
-router.put("/updateBooks",BookController.updateBooks)
-router.delete("/deleteBooks",BookController.deleteBooks)
-router.get("/totalSalesPerAuthor",BookController.totalSalesPerAuthor)
+// router.post("/createBook", BookController.createBook)
+// // router.get("/users/:userId",commonMW.authenticate,BookController.getBooksData)
+// router.put("/users/:userId",commonMW.authenticate,commonMW.authorise,BookController.updateBooks)
+// router.delete('/users/:userId',commonMW.authorise,commonMW.authenticate,BookController.deleteBooks)
+// router.get('/users/:userId',commonMW.authorise,commonMW.authenticate,BookController.totalSalesPerAuthor)
 
-router.post("/createUser", UserController.createUser)
-router.get("/getUsersData", UserController.getUsersData)
-router.get("/basicRoute", commonMW.mid1, commonMW.mid2, commonMW.mid3, commonMW.mid4, UserController.basicCode)
+router.post("/users",UserController.createUser)
+router.post("/login",UserController.loginUser)
+router.get("/users/:userId",commonMW.authenticate,commonMW.authorise,UserController.getUserData)
+router.put("/users/:userId",commonMW.authenticate,commonMW.authorise,UserController.updateUser)
+router.delete('/users/:userId',commonMW.authorise,commonMW.authenticate,UserController.deleteUser)
+// router.get("/basicRoute", commonMW.mid1, commonMW.mid2, commonMW.mid3, commonMW.mid4, UserController.basicCode)
 
 
 // const mid1= function ( req, res, next) {
