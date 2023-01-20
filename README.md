@@ -1,3 +1,5 @@
+Californium_Axios_Promises
+
 # Promise has typically 3 states
 - Pending : not awaited and hence has not completed yet ( e.g. typically when you dont await an axios or db call)
 - Rejected: When promise failed ( wrong url | server down etc)
@@ -8,9 +10,6 @@
 # What is a promise:
 - layman's definition: It is something in JS that tells us whether an operation has completed or not (pending)
 - technical definition: it is a JS object that represents whether an asynchronous operation(like db or axios call) is completed or not
-
-
-
 
 
 // GIT link..go thourgh this code thoroughly..it will result in a confusion when you are going though the code- postman se hit kar rhe hai and same axios se bhi hit kar rhe hai ..why?

@@ -20,7 +20,7 @@ let getDistrictsAndDate = async function (req, res) {
 }
 
 
-/*let getByPin = async function (req, res) {
+let getByPin = async function (req, res) {
     try {
         let pin = req.query.pincode
         let date = req.query.date
@@ -59,9 +59,9 @@ let getOtp = async function (req, res) {
         res.status(500).send({ msg: err.message })
     }
 }
-*/
+
 
 
 module.exports.getDistrictsAndDate = getDistrictsAndDate
-
-//module.exports.getOtp = getOtp
+module.exports.getByPin = getByPin
+module.exports.getOtp = getOtp
